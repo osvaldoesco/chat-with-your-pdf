@@ -5,10 +5,9 @@ import Home from './pages/Home'
 function App() {
 
   return (
-    <>
-      <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js" />
+    <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
       <Home />
-    </>
+    </Worker>
   )
 }
 

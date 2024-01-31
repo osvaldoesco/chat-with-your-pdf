@@ -1,17 +1,21 @@
 import { Viewer, SpecialZoomLevel } from '@react-pdf-viewer/core'
-import { toolbarPlugin } from '@react-pdf-viewer/toolbar';
-import '@react-pdf-viewer/toolbar/lib/styles/index.css';
+import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
+import { pageNavigationPlugin } from '@react-pdf-viewer/page-navigation';
+
+import '@react-pdf-viewer/page-navigation/lib/styles/index.css';
+import '@react-pdf-viewer/default-layout/lib/styles/index.css';
+
+const PDF_URL = 'https://prosper-assist-llm.s3.amazonaws.com/corpus_documents/policy_documents/hiscox_gl.pdf'
 
 const PdfViewer = () => {
-  const toolbarPluginInstance = toolbarPlugin();
-  const { Toolbar } = toolbarPluginInstance
+  const pageNavigationPluginInstance = pageNavigationPlugin();
+  const defaultLayoutPluginInstance = defaultLayoutPlugin();
+
   return (
     <div>
-      <Toolbar />
       <Viewer
-        fileUrl={'/src/assets/hiscox_gl.pdf'}
-        defaultScale={SpecialZoomLevel.PageFit}
-        plugins={[toolbarPluginInstance]}
+        fileUrl={PDF_URL}
+        plugins={[defaultLayoutPluginInstance, pageNavigationPluginInstance]}
       />
     </div>
   )
