@@ -24,6 +24,7 @@ const Chat = ({ messages, setMessages }: ChatProps) => {
   const messageTextAreaRef = useRef<HTMLTextAreaElement>(null);
   const [loading, setLoading] = useState(false);
 
+
   const handleOnChangeMessage = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => setMessageValue(event.target.value);
@@ -31,23 +32,25 @@ const Chat = ({ messages, setMessages }: ChatProps) => {
   const hadleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      setLoading(true);
-      setMessages((prevValue) => [
-        ...prevValue,
-        { type: SenderType.USER, content: messageValue },
-      ]);
-      fetchChatPDF(messageValue).then((data: ChatPDFResponse) => {
-        setLoading(false);
+      if(messageValue) {
+        setLoading(true);
         setMessages((prevValue) => [
           ...prevValue,
-          {
-            type: SenderType.AI,
-            content: data.message.text,
-            citations: data.message.citations,
-          },
+          { type: SenderType.USER, content: messageValue },
         ]);
-      });
-      setMessageValue("");
+        fetchChatPDF(messageValue).then((data: ChatPDFResponse) => {
+          setLoading(false);
+          setMessages((prevValue) => [
+            ...prevValue,
+            {
+              type: SenderType.AI,
+              content: data.message.text,
+              citations: data.message.citations,
+            },
+          ]);
+        });
+        setMessageValue("");
+      }
     }
   };
 
@@ -87,7 +90,7 @@ const Chat = ({ messages, setMessages }: ChatProps) => {
           visible={loading}
           height="100"
           width="100"
-          color="#4fa94d"
+          color="#fff"
           ariaLabel="three-circles-loading"
           wrapperClass='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'
         />
@@ -100,7 +103,7 @@ const Chat = ({ messages, setMessages }: ChatProps) => {
                     type={message.type}
                     content={message.content}
                     citations={message.citations}
-                  ></MessageWrapper>
+                  />
                 );
               })
             : ""}
@@ -120,7 +123,7 @@ const Chat = ({ messages, setMessages }: ChatProps) => {
           <button
             className=" m-2 flex justify-center items-center bg-gray-500 h-9 w-9 rounded-lg"
             onClick={() => onButtonSend()}
-            disabled={loading}
+            disabled={loading || !messageValue}
           >
             <svg
               width="24"

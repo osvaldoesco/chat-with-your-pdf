@@ -3,7 +3,7 @@ export const fetchChatPDF = async(question: string) => {
   const chatPDFBody = {
     question
   }
-console.log(question)
+
 const chatPDFResponse = await fetch(chatPDFURL,{
   method: "POST",
   headers:{
