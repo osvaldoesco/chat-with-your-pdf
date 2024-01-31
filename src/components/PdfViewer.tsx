@@ -1,4 +1,4 @@
-import { Viewer, SpecialZoomLevel } from '@react-pdf-viewer/core'
+import { Viewer } from '@react-pdf-viewer/core'
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import { pageNavigationPlugin } from '@react-pdf-viewer/page-navigation';
 

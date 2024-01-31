@@ -27,6 +27,7 @@ const Chat = ({ messages, setMessages }: ChatProps) => {
   const handleOnChangeMessage = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => setMessageValue(event.target.value);
+
   const hadleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -49,6 +50,7 @@ const Chat = ({ messages, setMessages }: ChatProps) => {
       setMessageValue("");
     }
   };
+
   const onButtonSend = () => {
     setLoading(true);
     setMessages((prevValue) => [
@@ -77,17 +79,18 @@ const Chat = ({ messages, setMessages }: ChatProps) => {
       className="w-full h-full bg-slate-700 overflow-x-hidden"
       style={scrollbarStyle}
     >
-      <ThreeCircles
-        visible={loading}
-        height="100"
-        width="100"
-        color="#4fa94d"
-        ariaLabel="three-circles-loading"
-      />
       <div
-        className="w-full h-[85%] xl:h-[90%] overflow-x-hidden"
+        className="relative w-full h-[85%] xl:h-[90%] overflow-x-hidden"
         style={scrollbarStyle}
       >
+        <ThreeCircles
+          visible={loading}
+          height="100"
+          width="100"
+          color="#4fa94d"
+          ariaLabel="three-circles-loading"
+          wrapperClass='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'
+        />
         <div className="p-5 h-full text-white flex flex-col">
           {messages.length > 0
             ? messages?.map((message: Messages, key: number) => {
